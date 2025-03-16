@@ -44,5 +44,34 @@ void insertPatient(PatientArray *pa, Patient p) {
     pa->size++;
 }    
 
+int findNextPatient(PatientArray *pa) {
+    int nextPatient = 0;
+    for (int i = 1; i < pa->size; i++) {
+        if (pa->patients[i].severity > pa->patients[nextPatient].severity) {
+            nextPatient = i;
+        }
+        else if (pa->patients[i].severity == pa->patients[nextPatient].severity) {
+            if (std::stoi(pa->patients[i].arrival_time) < std::stoi(pa->patients[nextPatient].arrival_time)) {
+                nextPatient = i;
+            }
+        }
+    }
+    return nextPatient;
+}
+
+
+// Implemente uma função para remover um paciente em uma posição qualquer, garantindo que os elementos restantes fiquem contíguos no array. 
+// Se a quantidade de pacientes cair para menos de 1/4 da capacidade total, o array deve ser reduzido pela metade, mas nunca menor que 4.
+
+void removePatient(PatientArray *pa, int index) {
+    for (int i = index; i < pa->size -1; i++) {
+        pa->patients[i] = pa->patients[i+1];
+    }
+    pa->size--;
+
+    if (pa->size < pa->capacity/4 && pa->capacity > 4) {
+        pa->capacity /= 2;
+    }
+}
 }
 
