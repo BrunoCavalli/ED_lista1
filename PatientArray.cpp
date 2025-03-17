@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 
 namespace PatientArray {
 
@@ -44,20 +45,24 @@ void insertPatient(PatientArray *pa, Patient p) {
     pa->size++;
 }    
 
-int findNextPatient(PatientArray *pa) {
-    int nextPatient = 0;
-    for (int i = 1; i < pa->size; i++) {
-        if (pa->patients[i].severity > pa->patients[nextPatient].severity) {
-            nextPatient = i;
-        }
-        else if (pa->patients[i].severity == pa->patients[nextPatient].severity) {
-            if (std::stoi(pa->patients[i].arrival_time) < std::stoi(pa->patients[nextPatient].arrival_time)) {
-                nextPatient = i;
+
+    int findNextPatient(PatientArray *pa) {
+        if (pa->size == 0) return -1;
+    
+        int mostSevere = 0;
+        for (int i = 1; i < pa->size; i++) {
+            if (pa->patients[i].severity > pa->patients[mostSevere].severity ||
+               (pa->patients[i].severity == pa->patients[mostSevere].severity &&
+                strcmp(pa->patients[i].arrival_time, pa->patients[mostSevere].arrival_time) < 0)) {
+                mostSevere = i;
             }
         }
+    
+        return mostSevere;
     }
-    return nextPatient;
-}
+    
+
+    
 
 
 // Implemente uma função para remover um paciente em uma posição qualquer, garantindo que os elementos restantes fiquem contíguos no array. 
@@ -75,12 +80,11 @@ void removePatient(PatientArray *pa, int index) {
 }
 
 Patient popNextPatient(PatientArray *pa) {
-    int index = findNextPatient(pa);
-    if (index == -1) return {}; // Retorna um paciente vazio
-
-    Patient next = pa->patients[index];
-    removePatient(pa, index);
-    return next;
+    int nextPatientIndex = findNextPatient(pa);
+    Patient nextPatient = pa->patients[nextPatientIndex];
+    removePatient(pa, nextPatientIndex);
+    return nextPatient;
 }
+
 }
 
