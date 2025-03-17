@@ -73,5 +73,13 @@ void removePatient(PatientArray *pa, int index) {
         pa->capacity /= 2;
     }
 }
+
+Patient popNextPatient(PatientArray *pa) {
+    int nextPatientIndex = findNextPatient(pa);
+    Patient nextPatient = pa->patients[nextPatientIndex];
+    removePatient(pa, nextPatientIndex);
+    return nextPatient;
+}
+
 }
 

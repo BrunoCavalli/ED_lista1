@@ -25,11 +25,8 @@ int main() {
     std::cout << "Next patient index: " << nextPatientIndex << std::endl;
     std::cout << "Next patient: " << pa->patients[nextPatientIndex].name << std::endl;
 
-    // Remove a patient
-    PatientArray::removePatient(pa, nextPatientIndex);
-
-    // Print the patients again
-    PatientArray::printPatients(pa);
+    // Remove the next patient
+    
 
     // Clean up
     delete[] pa->patients;
