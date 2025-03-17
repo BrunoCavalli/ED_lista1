@@ -75,11 +75,12 @@ void removePatient(PatientArray *pa, int index) {
 }
 
 Patient popNextPatient(PatientArray *pa) {
-    int nextPatientIndex = findNextPatient(pa);
-    Patient nextPatient = pa->patients[nextPatientIndex];
-    removePatient(pa, nextPatientIndex);
-    return nextPatient;
-}
+    int index = findNextPatient(pa);
+    if (index == -1) return {}; // Retorna um paciente vazio
 
+    Patient next = pa->patients[index];
+    removePatient(pa, index);
+    return next;
+}
 }
 

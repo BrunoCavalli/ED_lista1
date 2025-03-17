@@ -13,9 +13,9 @@ struct Patient {
 };
 
 struct PatientArray {
-    Patient* patients;
-    int size;
-    int capacity;
+    Patient* patients;  // Ponteiro para o array de pacientes
+    int size;           // Número de pacientes atualmente no array
+    int capacity;       // Capacidade máxima do array
 };
 
 // Funções do TAD
